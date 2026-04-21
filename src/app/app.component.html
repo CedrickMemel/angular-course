@@ -7,21 +7,31 @@
 
 
 <div class="courses">
+    <ng-template #blankImage let-courseName>
+        <p class="warn">
+            {{courseName}} has no image yet.
+        </p>
+        <img lass="course-image" src="/assets/empty-image.png" alt="No image">
+    </ng-template>
 
-    <div class="course-card">
-
-        <div class="course-title">
-            Angular Core Deep Dive
-        </div>
-        <img width="300" alt="Angular Logo"
-             src="https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png">
-
+    @for (course of courses; track trackCourseById){
+        <course-card (courseSelected)="onCourseSelected($event)" [course]="course" 
+        [noImageTemplate]="blankImage">
+        
+         <img class="course-image" width="300" alt="Angular Logo"
+            [src]="course.iconUrl">
+        
         <div class="course-description">
-            A detailed walk-through of the most important part of Angular - the Core and Common modules.
+            {{course.longDescription}}
+        </div> 
+
+        </course-card>
+    }
+    @empty {
+        <div class="no-results">
+            No courses found!
         </div>
-
-    </div>
-
+    }
 </div>
 
 

@@ -1,0 +1,32 @@
+    <div class="course-card" [ngClass]="cardClasses()">
+
+        <div class="course-title">
+            {{course.description}}
+        </div>
+        <ng-content select=".course-image" *ngIf="course.iconUrl; else noImage">
+        </ng-content>
+
+        <ng-template #noImage>
+            <ng-container #noImage *ngTemplateOutlet="noImageTemplate; context: { $implicit: course.description }"> </ng-container>
+        </ng-template>
+
+        <ng-content select=".course-description" *ngIf="course.description">
+        </ng-content>
+        <div class="course-category">
+            @switch(course.category){
+                @case('BEGINNER'){
+                    <div class="class">Beginner</div>
+                }
+                 @case('INTERMEDIATE'){
+                    <div class="class">Intermediate</div>
+                 }
+                @case('ADVANCED'){
+                    <div class="class">Advanced</div>
+                }
+                @default{
+                    <div class="class">Unknown</div>
+                }
+            }
+        </div>
+        <button (click)="courseEmitter.emit(course)">Select</button>
+    </div>
